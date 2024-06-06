@@ -2,8 +2,10 @@ package dev.fernando.dscommerce.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    
+    @Column(unique = true)
     private String email;
     private String phone;
     private LocalDate birthDate;
@@ -73,6 +77,12 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
+    }
+    public void addOrder(Order order) {
+        this.orders.add(order);
     }
 
     @Override
