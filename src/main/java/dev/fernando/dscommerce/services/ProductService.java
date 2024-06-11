@@ -1,6 +1,5 @@
 package dev.fernando.dscommerce.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,7 +15,7 @@ import dev.fernando.dscommerce.repositories.ProductRepository;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public ProductService (final ProductRepository productRepository) {
+    public ProductService(final ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -32,5 +31,12 @@ public class ProductService {
     public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> products = this.productRepository.findAll(pageable);
         return products.map(ProductDTO::new);
+    }
+
+    @Transactional
+    public ProductDTO store(ProductDTO productDTO) {
+        Product p = new Product(productDTO);
+        p.setId(null);
+        return new ProductDTO(this.productRepository.save(p));
     }
 }

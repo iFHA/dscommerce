@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dev.fernando.dscommerce.dto.ProductDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,16 +31,14 @@ public class Product {
     private String imgUrl;
 
     @ManyToMany
-    @JoinTable(
-        name = "tb_product_category", 
-        joinColumns = @JoinColumn(name ="product_id"), 
-        inverseJoinColumns = @JoinColumn(name ="category_id"))
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
@@ -47,6 +46,14 @@ public class Product {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Product(ProductDTO dto) {
+        this.id = dto.id();
+        this.name = dto.name();
+        this.description = dto.description();
+        this.price = dto.price();
+        this.imgUrl = dto.imgUrl();
     }
 
     public Long getId() {
@@ -103,9 +110,9 @@ public class Product {
 
     public List<Order> getOrders() {
         return items
-        .stream()
-        .map(OrderItem::getOrder)
-        .toList();
+                .stream()
+                .map(OrderItem::getOrder)
+                .toList();
     }
 
     @Override
@@ -115,6 +122,7 @@ public class Product {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -131,5 +139,5 @@ public class Product {
             return false;
         return true;
     }
-    
+
 }
