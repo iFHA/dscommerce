@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import dev.fernando.dscommerce.dto.CustomError;
-import dev.fernando.dscommerce.dto.FieldMessage;
 import dev.fernando.dscommerce.dto.ValidationError;
 import dev.fernando.dscommerce.services.exceptions.DatabaseException;
 import dev.fernando.dscommerce.services.exceptions.ResourceNotFoundException;
