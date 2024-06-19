@@ -27,7 +27,7 @@ import jakarta.persistence.Table;
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -104,6 +104,15 @@ public class User implements UserDetails {
     public void addOrder(Order order) {
         this.orders.add(order);
     }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public boolean hasRole(String roleName) {
+        return roles.stream().anyMatch(r->r.getAuthority().equals(roleName));
+    }
+
     public void addRole(Role role) {
         this.roles.add(role);
     }
