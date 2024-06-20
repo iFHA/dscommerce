@@ -9,6 +9,7 @@ import java.util.Objects;
 import dev.fernando.dscommerce.entities.Order;
 import dev.fernando.dscommerce.entities.OrderItem;
 import dev.fernando.dscommerce.enums.OrderStatus;
+import jakarta.validation.constraints.NotEmpty;
 
 public class OrderDTO {
     private Long id;
@@ -16,6 +17,8 @@ public class OrderDTO {
     private OrderStatus status;
     private ClientDTO client;
     private PaymentDTO payment;
+
+    @NotEmpty(message = "Pedido deve ter pelo menos um item")
     private List<OrderItemDTO> items = new ArrayList<>();
     
     public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO client, PaymentDTO payment) {

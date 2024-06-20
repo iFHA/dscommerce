@@ -98,6 +98,10 @@ public class Order {
         return Collections.unmodifiableSet(items);
     }
 
+    public void addItem(OrderItem item) {
+        this.items.add(item);
+    }
+
     public List<Product> getProducts() {
         return items
         .stream()
