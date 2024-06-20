@@ -23,7 +23,7 @@ import dev.fernando.dscommerce.services.ProductService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -49,7 +49,7 @@ public class ProductController {
         ProductDTO p = this.productService.store(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
         .path("/{id}")
-        .buildAndExpand(p.id())
+        .buildAndExpand(p.getId())
         .toUri();
         return ResponseEntity.created(uri).body(p);
     }

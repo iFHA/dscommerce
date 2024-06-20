@@ -3,6 +3,7 @@ package dev.fernando.dscommerce.entities;
 import java.util.Collections;
 import java.util.Set;
 
+import dev.fernando.dscommerce.dto.CategoryDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,11 @@ public class Category {
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Category(CategoryDTO dto) {
+        this.id = dto.id();
+        this.name = dto.name();
     }
 
     public Long getId() {

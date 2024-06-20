@@ -49,11 +49,20 @@ public class Product {
     }
 
     public Product(ProductDTO dto) {
-        this.id = dto.id();
-        this.name = dto.name();
-        this.description = dto.description();
-        this.price = dto.price();
-        this.imgUrl = dto.imgUrl();
+        this.id = dto.getId();
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.price = dto.getPrice();
+        this.imgUrl = dto.getImgUrl();
+
+        setCategoriesFromDTO(dto);
+    }
+
+    public void setCategoriesFromDTO(ProductDTO dto) {
+        dto.getCategories()
+        .stream()
+        .map(Category::new)
+        .forEach(this::addCategory);
     }
 
     public Long getId() {
@@ -96,11 +105,15 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
+    public void clearCategories() {
+        categories.clear();
+    }
+
     public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);
     }
 
-    public void addCategorie(Category category) {
+    public void addCategory(Category category) {
         this.categories.add(category);
     }
 
