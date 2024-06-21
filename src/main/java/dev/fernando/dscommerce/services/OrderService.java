@@ -9,12 +9,10 @@ import dev.fernando.dscommerce.dto.OrderDTO;
 import dev.fernando.dscommerce.entities.Order;
 import dev.fernando.dscommerce.entities.OrderItem;
 import dev.fernando.dscommerce.entities.Product;
-import dev.fernando.dscommerce.entities.User;
 import dev.fernando.dscommerce.enums.OrderStatus;
 import dev.fernando.dscommerce.repositories.OrderItemRepository;
 import dev.fernando.dscommerce.repositories.OrderRepository;
 import dev.fernando.dscommerce.repositories.ProductRepository;
-import dev.fernando.dscommerce.services.exceptions.ForbiddenException;
 import dev.fernando.dscommerce.services.exceptions.ResourceNotFoundException;
 
 @Service
