@@ -17,6 +17,12 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -88,6 +94,7 @@
 						<exclude>dev/fernando/dscommerce/config/**</exclude>
 						<exclude>dev/fernando/dscommerce/entities/**</exclude>
 						<exclude>dev/fernando/dscommerce/dto/**</exclude>
+						<exclude>dev/fernando/dscommerce/enums/**</exclude>
 						<exclude>dev/fernando/dscommerce/controllers/handlers/**</exclude>
 						<exclude>dev/fernando/dscommerce/services/exceptions/**</exclude>
 					</excludes>
