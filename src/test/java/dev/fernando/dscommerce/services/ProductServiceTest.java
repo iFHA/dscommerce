@@ -11,12 +11,12 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import dev.fernando.dscommerce.dto.ProductDTO;
 import dev.fernando.dscommerce.dto.ProductMinDTO;
 import dev.fernando.dscommerce.entities.Product;
 import dev.fernando.dscommerce.repositories.ProductRepository;
@@ -35,6 +35,7 @@ public class ProductServiceTest {
     private Long existingId;
     private Long nonExistingId;
     private Product entity;
+    private ProductDTO dto;
     private PageImpl<Product> page;
 
     @BeforeEach
@@ -42,11 +43,13 @@ public class ProductServiceTest {
         this.existingId = 1L;
         this.nonExistingId = 1000L;
         this.entity = ProductFactory.createProduct();
+        this.dto = new ProductDTO(entity);
         this.page = new PageImpl<>(List.of(this.entity));
 
         Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(entity));
         Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
         Mockito.when(repository.searchByName(ArgumentMatchers.anyString(), (Pageable) ArgumentMatchers.any())).thenReturn(page);
+        Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(entity);
     }
 
     @Test
@@ -64,5 +67,12 @@ public class ProductServiceTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result.getSize());
         Assertions.assertInstanceOf(ProductMinDTO.class, result.getContent().get(0));
+    }
+    @Test
+    void storeShouldReturnProductDto(){
+        var result = service.store(this.dto);
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getId(), dto.getId());
+        Assertions.assertInstanceOf(ProductDTO.class, result);
     }
 }
