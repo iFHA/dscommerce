@@ -2,12 +2,9 @@ package dev.fernando.dscommerce.services;
 
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +13,20 @@ import dev.fernando.dscommerce.entities.Role;
 import dev.fernando.dscommerce.entities.User;
 import dev.fernando.dscommerce.projections.UserDetailsProjection;
 import dev.fernando.dscommerce.repositories.UserRepository;
+import dev.fernando.dscommerce.util.CustomUserUtil;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
+    private final CustomUserUtil util;
 
-    public UserService(UserRepository repository) {
+    public UserService(
+        UserRepository repository,
+        CustomUserUtil util
+    ) {
         this.repository = repository;
+        this.util = util;
     }
 
     @Override
@@ -44,10 +47,7 @@ public class UserService implements UserDetailsService {
 
     protected User authenticated() {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-            String username = jwtPrincipal.getClaimAsString("username");
-            return repository.findByEmail(username).get();
+            return repository.findByEmail(util.getLoggedUsername()).get();
         } catch(Exception e) {
             throw new UsernameNotFoundException("Usuário não encontrado!");
         }
