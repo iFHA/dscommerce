@@ -95,7 +95,8 @@
 						<exclude>dev/fernando/dscommerce/entities/**</exclude>
 						<exclude>dev/fernando/dscommerce/dto/**</exclude>
 						<exclude>dev/fernando/dscommerce/enums/**</exclude>
-						<exclude>dev/fernando/dscommerce/controllers/handlers/**</exclude>
+						<exclude>dev/fernando/dscommerce/controllers/**</exclude>
+						<exclude>dev/fernando/dscommerce/util/**</exclude>
 						<exclude>dev/fernando/dscommerce/services/exceptions/**</exclude>
 					</excludes>
 				</configuration>
