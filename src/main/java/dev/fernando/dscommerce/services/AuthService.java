@@ -16,7 +16,11 @@ public class AuthService {
     public void validateSelfOrAdmin(long userId) {
         User me = userService.authenticated();
         boolean isAdmin = me.hasRole("ROLE_ADMIN");
-        if (!isAdmin && !me.getId().equals(userId)) {
+        if(isAdmin){
+            return;
+        }
+        boolean isOwner = me.getId().equals(userId);
+        if(!isOwner) {
             throw new ForbiddenException("Você não é ADMIN ou não é o dono desse recurso");
         }
     }
