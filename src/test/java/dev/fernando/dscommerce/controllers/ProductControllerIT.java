@@ -94,7 +94,7 @@ public class ProductControllerIT {
 	}
 
 	@Test
-	public void findAllShouldReturnProductMinDTOPage() throws Exception {
+	public void findAllShouldReturnProductMinDTOPageWhenNameEmpty() throws Exception {
 
 		ResultActions result =
 				mockMvc.perform(get("/products")
@@ -104,6 +104,23 @@ public class ProductControllerIT {
 		
 		result.andExpect(jsonPath("$.content[0].id").isNotEmpty());
 		result.andExpect(jsonPath("$.content[0].name").isNotEmpty());
+		result.andExpect(jsonPath("$.content[0].price").isNotEmpty());
+		result.andExpect(jsonPath("$.content[0].imgUrl").isNotEmpty());
+	}
+	@Test
+	public void findAllShouldReturnProductMinDTOPageWhenNameIsNotEmpty() throws Exception {
+
+		ResultActions result =
+				mockMvc.perform(get("/products")
+					.queryParam("name", "PC Gamer ")
+					.queryParam("sort", "name")
+					.accept(MediaType.APPLICATION_JSON));
+
+		result.andExpect(status().isOk());
+		
+		result.andExpect(jsonPath("$.content[0].id").isNotEmpty());
+		result.andExpect(jsonPath("$.content[0].name").isNotEmpty());
+		result.andExpect(jsonPath("$.content[0].name").value("PC Gamer Alfa"));
 		result.andExpect(jsonPath("$.content[0].price").isNotEmpty());
 		result.andExpect(jsonPath("$.content[0].imgUrl").isNotEmpty());
 	}
