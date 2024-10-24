@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ import dev.fernando.dscommerce.tests.TokenUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-// @Transactional removido por conta de que com ele a verificação de integridade referencial não funciona
+@Transactional
 public class ProductControllerIT {
 
     @Autowired
@@ -403,6 +404,7 @@ public class ProductControllerIT {
 
 	}
     @Test
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void deleteShouldReturnBadRequestWhenAdminAuthenticatedAndProductIsDependent() throws Exception {
 	
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
